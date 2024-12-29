@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RepairOrderDaoImpl implements RepairOrderDao {
+
+
     @Override
     public boolean save(RepairOrder order) {
         Connection conn = null;
@@ -30,6 +32,8 @@ public class RepairOrderDaoImpl implements RepairOrderDao {
             JDBCUtils.closeResources(conn, stmt, null);
         }
     }
+
+
 
     @Override
     public boolean update(RepairOrder order) {
@@ -118,29 +122,7 @@ public class RepairOrderDaoImpl implements RepairOrderDao {
         return orders;
     }
 
-    @Override
-    public List<RepairOrder> findByStatus(String status) {
-        List<RepairOrder> orders = new ArrayList<>();
-        Connection conn = null;
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-        try {
-            conn = JDBCUtils.getConnection();
-            String sql = "SELECT * FROM repair_orders WHERE status = ? ORDER BY create_time DESC";
-            stmt = conn.prepareStatement(sql);
-            stmt.setString(1, status);
-            rs = stmt.executeQuery();
 
-            while (rs.next()) {
-                orders.add(extractRepairOrderFromResultSet(rs));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            JDBCUtils.closeResources(conn, stmt, rs);
-        }
-        return orders;
-    }
 
     private RepairOrder extractRepairOrderFromResultSet(ResultSet rs) throws SQLException {
         RepairOrder order = new RepairOrder();

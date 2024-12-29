@@ -56,32 +56,4 @@ public class UserDaoImpl implements UserDao {
         }
     }
 
-    @Override
-    public User findById(Integer id) {
-        Connection conn = null;
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-        try {
-            conn = JDBCUtils.getConnection();
-            String sql = "SELECT * FROM users WHERE id = ?";
-            stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, id);
-            rs = stmt.executeQuery();
-
-            if (rs.next()) {
-                User user = new User();
-                user.setId(rs.getInt("id"));
-                user.setUsername(rs.getString("username"));
-                user.setPassword(rs.getString("password"));
-                user.setRole(rs.getString("role"));
-                user.setCreateTime(rs.getTimestamp("create_time"));
-                return user;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            JDBCUtils.closeResources(conn, stmt, rs);
-        }
-        return null;
-    }
 }

@@ -4,11 +4,13 @@ import com.campus.dao.impl.RepairRecordDaoImpl;
 import com.campus.entity.RepairOrder;
 import com.campus.entity.User;
 import com.campus.service.RepairOrderService;
+import com.campus.service.RepairRecordService;
 import com.campus.service.UserService;
 import com.campus.service.impl.RepairOrderServiceImpl;
+import com.campus.service.impl.RepairRecordServiceImpl;
 import com.campus.service.impl.UserServiceImpl;
 import com.campus.entity.RepairRecord;
-import com.campus.dao.RepairRecordDao;
+
 
 import java.util.List;
 import java.util.Scanner;
@@ -18,7 +20,7 @@ public class MainView {
     private static final UserService userService = new UserServiceImpl();
     private static final RepairOrderService repairOrderService = new RepairOrderServiceImpl();
     private static User currentUser;
-    private static final RepairRecordDao repairRecordDao = new RepairRecordDaoImpl();
+    private static final RepairRecordService repairRecordService = new RepairRecordServiceImpl();
 
     public static void main(String[] args) {
         while (true) {
@@ -165,7 +167,9 @@ public class MainView {
         for (RepairOrder order : orders) {
             System.out.println("ID: " + order.getId());
             System.out.println("标题: " + order.getTitle());
+            System.out.println("描述: " + order.getDescription());
             System.out.println("状态: " + order.getStatus());
+            System.out.println("位置: " + order.getLocation());
             System.out.println("提交时间: " + order.getCreateTime());
             System.out.println("------------------------");
         }
@@ -181,9 +185,10 @@ public class MainView {
         System.out.println("\n=== 所有报修记录 ===");
         for (RepairOrder order : orders) {
             System.out.println("ID: " + order.getId());
-            System.out.println("用户ID: " + order.getUserId());
             System.out.println("标题: " + order.getTitle());
+            System.out.println("描述: " + order.getDescription());
             System.out.println("状态: " + order.getStatus());
+            System.out.println("位置: " + order.getLocation());
             System.out.println("提交时间: " + order.getCreateTime());
             System.out.println("------------------------");
         }
@@ -200,16 +205,14 @@ public class MainView {
         int choice = scanner.nextInt();
         scanner.nextLine(); // 消费换行符
 
-        System.out.print("请输入处理意见：");
-        String handlingNotes = scanner.nextLine();
 
         String status = choice == 1 ? "processing" : "completed";
         
         // 更新报修单状态
         if (repairOrderService.updateOrderStatus(orderId, status)) {
             // 添加处理记录
-            RepairRecord record = new RepairRecord(orderId, currentUser.getId(), handlingNotes);
-            if (repairRecordDao.save(record)) {
+            RepairRecord record = new RepairRecord(orderId, currentUser.getId(), null);
+            if (repairRecordService.save(record)) {
                 System.out.println("处理成功！");
             } else {
                 System.out.println("处理记录保存失败。");

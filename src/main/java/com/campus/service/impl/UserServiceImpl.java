@@ -26,8 +26,4 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
-    @Override
-    public User getUserById(Integer id) {
-        return userDao.findById(id);
-    }
 } 

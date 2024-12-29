@@ -3,7 +3,7 @@ package com.campus.utils;
 import java.sql.*;
 
 public class JDBCUtils {
-    private static final String URL = "jdbc:mysql://localhost:3306/campus_repair?useSSL=false&serverTimezone=Asia/Shanghai";
+    private static final String URL = "jdbc:mysql://localhost:3306/campus_repair?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "123456";
 

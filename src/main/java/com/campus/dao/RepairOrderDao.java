@@ -9,5 +9,4 @@ public interface RepairOrderDao {
     RepairOrder findById(Integer id);
     List<RepairOrder> findAll();
     List<RepairOrder> findByUserId(Integer userId);
-    List<RepairOrder> findByStatus(String status);
 } 

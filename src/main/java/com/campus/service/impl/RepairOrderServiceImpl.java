@@ -25,10 +25,7 @@ public class RepairOrderServiceImpl implements RepairOrderService {
         return false;
     }
 
-    @Override
-    public RepairOrder getOrderById(Integer id) {
-        return repairOrderDao.findById(id);
-    }
+
 
     @Override
     public List<RepairOrder> getAllOrders() {
@@ -40,8 +37,4 @@ public class RepairOrderServiceImpl implements RepairOrderService {
         return repairOrderDao.findByUserId(userId);
     }
 
-    @Override
-    public List<RepairOrder> getOrdersByStatus(String status) {
-        return repairOrderDao.findByStatus(status);
-    }
 }

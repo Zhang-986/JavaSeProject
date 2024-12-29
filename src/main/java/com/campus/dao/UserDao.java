@@ -5,5 +5,5 @@ import com.campus.entity.User;
 public interface UserDao {
     User findByUsername(String username);
     boolean save(User user);
-    User findById(Integer id);
+
 } 
